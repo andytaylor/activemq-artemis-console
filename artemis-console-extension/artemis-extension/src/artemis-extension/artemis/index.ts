@@ -33,7 +33,7 @@ export const artemis: HawtioPlugin = () => {
     path: artemisPluginPath,
     component: Artemis,
     order: -2,
-    isActive:  async () => workspace.treeContainsDomainAndProperties(jmxDomain),
+    isActive:  async () => true,
   })
 
   hawtio.addPlugin({
