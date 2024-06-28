@@ -17,7 +17,7 @@
 import { ActiveSort, Filter } from './table/ArtemisTable'
 import { jolokiaService, MBeanNode } from '@hawtio/react'
 import { createAddressObjectName, createQueueObjectName } from './util/jmx'
-import { contextNodeType, contextsType, domainNodeType, endpointNodeType, jmxDomain, log } from './globals'
+import { artemisSecurityMBean, log } from './globals'
 import { Message } from './messages/MessageView'
 
 export type BrokerInfo = {
@@ -96,7 +96,6 @@ export type ClusterConnections = {
     clusterConnections: ClusterConnection[]
 }
 
-const BROKER_SEARCH_PATTERN = jmxDomain + ":broker=*";
 const LIST_NETWORK_TOPOLOGY_SIG = "listNetworkTopology";
 const SEND_MESSAGE_SIG = "sendMessage(java.util.Map,int,java.lang.String,boolean,java.lang.String,java.lang.String,boolean)";
 const DELETE_ADDRESS_SIG = "deleteAddress(java.lang.String)";
@@ -128,18 +127,56 @@ const typeLabels = ["DEFAULT", "1", "object", "text", "bytes", "map", "stream", 
 
 class ArtemisService {
 
+    private artemisJMXDomain: Promise<string>
+    private artemisName: Promise<string>
     private brokerObjectName: Promise<string>
 
     constructor() {
+        this.artemisJMXDomain = this.initJmxDomain();
+        this.artemisName = this.initArtemisName();
         this.brokerObjectName = this.initBrokerObjectName();
     }
 
     private async initBrokerObjectName(): Promise<string> {
-        var search = await jolokiaService.search(BROKER_SEARCH_PATTERN);
+        var domain = await this.artemisJMXDomain;
+        var name = await this.artemisName;
+        var search = await jolokiaService.search(domain + ":broker=\"" + name + "\"");
         return search[0] ? search[0] : "";
     }
 
+    private async initJmxDomain(): Promise<string> {
+        return new Promise(async (resolve) => {
+            jolokiaService.readAttribute(artemisSecurityMBean, "JMXDomain").then((domain) => {
+                if(domain  === null) {
+                    resolve("org.apache.activemq.artemis")
+                    return;
+                }
+                resolve(domain as string);
+            }).catch(() => {
+                resolve("org.apache.activemq.artemis");
+            })
+        })
+    
+    }
 
+
+    private async initArtemisName(): Promise<string> {
+        return new Promise(async (resolve) => {
+            jolokiaService.readAttribute(artemisSecurityMBean, "BrokerName").then((name) => {
+                if(name  === null) {
+                    resolve("*")
+                    return;
+                }
+                resolve(name as string);
+            }).catch(() => {
+                resolve("*");
+            })
+        })
+    }
+
+    async getJMXDomain(): Promise<string> {
+        return await this.artemisJMXDomain;
+    }
 
     async createBrokerInfo(): Promise<BrokerInfo> {
         return new Promise<BrokerInfo>(async (resolve, reject) => {
@@ -548,50 +585,6 @@ class ArtemisService {
     checkCanBrowseQueue = (queueMBean: MBeanNode ): boolean => {
         return (this.DEBUG_PRIVS && queueMBean?.hasInvokeRights(BROWSE_SIG)) ?? false;
     }
-
-
-    findContext(node: MBeanNode): MBeanNode | null {
-        if (!this.hasDomain(node)) return null
-      
-        if (this.isDomainNode(node)) {
-          // The camel domain node so traverse to context folder & recurse
-          return this.findContext(node.getIndex(0) as MBeanNode)
-        }
-      
-        if (this.isContextsFolder(node)) {
-          if (node.childCount() === 0) return null
-      
-          // Find first context node in the list
-          return node.getIndex(0)
-        }
-      
-        if (this.isContext(node)) {
-          return node
-        }
-      
-        // Node is below a context so navigate up the tree
-        return node.findAncestor(ancestor => this.isContext(ancestor))
-      }
-
-      hasDomain(node: MBeanNode): boolean {
-        return jmxDomain === node.getMetadata('domain')
-      }
-      
-      isContextsFolder(node: MBeanNode): boolean {
-        return this.hasDomain(node) && node.getType() === contextsType
-      }
-
-      isContext(node: MBeanNode): boolean {
-        return this.hasDomain(node) && node.getType() === contextNodeType
-      }
-
-      isDomainNode(node: MBeanNode): boolean {
-        return node.getType() === domainNodeType
-      }
-
-      isEndpointNode(node: MBeanNode): boolean {
-        return this.hasDomain(node) && node.getType() === endpointNodeType
-      }
 }
 
 export const artemisService = new ArtemisService()

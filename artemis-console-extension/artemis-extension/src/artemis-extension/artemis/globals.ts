@@ -27,10 +27,5 @@ export const artemisJMXPluginTitle = 'Artemis JMX'
 export const artemisJMXPluginPath = '/treeartemisJMX'
 
 export const log = Logger.get(artemisPluginName) 
-export const jmxDomain = 'org.apache.activemq.artemis'
-export const domainNodeType = 'Camel Domain'
-export const contextsType = 'contexts'
-export const contextNodeType = 'context'
-
-export const endpointNodeType = 'endpointNode'
+export const artemisSecurityMBean = "hawtio:type=security,area=jmx,name=ArtemisJMXSecurity";
 
