@@ -47,29 +47,30 @@ svg text {
   font-family: PatternFlyIcons-webfont;
 }
 
-.pf-v5-topology__node.artemisBroker.pf-m-info .pf-v5-topology__node__background {
+
+.pf-topology__node.artemisBroker.pf-m-info .pf-topology__node__background {
   stroke: #801944;
   fill: #c12766;
 }
 
 
-.pf-v5-topology__node.artemisAddress.pf-m-info .pf-v5-topology__node__background {
+.pf-topology__node.artemisAddress.pf-m-info .pf-topology__node__background {
   stroke:  #2b326e;
   fill: #3e489f;
 }
 
-.pf-v5-topology__node.artemisQueue.pf-m-info .pf-v5-topology__node__background {
+.pf-topology__node.artemisQueue.pf-m-info .pf-topology__node__background {
   stroke:  #50621d;
   fill: #78932c;
 }
 
-.pf-v5-topology__node.artemisInternalAddress.pf-m-info .pf-v5-topology__node__background {
+.pf-topology__node.artemisInternalAddress.pf-m-info .pf-topology__node__background {
   stroke:  #2b326e;
   fill: #fff;
 }
 
 
-.pf-v5-topology__node.artemisInternalAddress.pf-m-info .pf-v5-topology__node__background {
+.pf-topology__node.artemisInternalAddress.pf-m-info .pf-topology__node__background {
   stroke:  #50621d;
   fill: #fff;
 }
