@@ -279,9 +279,6 @@ export const SendMessage: React.FunctionComponent<SendMessageProps> = (props: Se
   const Hint = () => (
     <TextContent>
       <Text component='p'>
-        This page allows you to create a queue bound to the chosen address.
-      </Text>
-      <Text component='p'>
         Use this page to send a message of type <code>TextMessage</code> to an address or queue. 
       </Text>
     </TextContent>
