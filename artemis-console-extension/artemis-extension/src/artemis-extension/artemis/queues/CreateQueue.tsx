@@ -187,7 +187,7 @@ export const CreateQueue: React.FunctionComponent<CreateQueueProps> = (props: Cr
                         allowEmptyInput />
                 </FormGroup>
                 <FormGroup label="Purge when no Consumers"
-                    labelIcon={<Tooltip content='A queue does not start receiving messages until a consumer is attached. When the last consumer is detached from the queue, the queue is purged (its messages are removed) and does not receive any more messages until a new consumer is attached.'><InfoCircleIcon /></Tooltip>}
+                    labelIcon={<Tooltip content='When set to true, a queue does not start receiving messages until a consumer is attached. When the last consumer is detached from the queue, the queue is purged (its messages are removed) and does not receive any more messages until a new consumer is attached.'><InfoCircleIcon /></Tooltip>}
                 >
                     <Checkbox
                         isChecked={isPurgeChecked}
