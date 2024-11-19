@@ -50,7 +50,7 @@ export const DeleteAddress: React.FunctionComponent<DeleteAddressProps> = (props
   return (
     <>
       <Title headingLevel="h2">Delete Address {props.address}</Title>
-      <ConnectHint text={["Use this page to delete the chosen address on the broker. The address is deleted only if it has no queues bound to it."]}/>
+      <ConnectHint text={["Use this page to delete the selected address on the broker. The address is deleted only if it has no queues bound to it."]}/>
       <Form>
         <ActionGroup>
           <Button variant="primary" onClick={() => setShowDeleteModal(true)} >Delete</Button>
