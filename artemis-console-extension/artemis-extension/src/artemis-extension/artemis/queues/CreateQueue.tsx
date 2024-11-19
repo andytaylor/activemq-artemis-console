@@ -121,7 +121,7 @@ export const CreateQueue: React.FunctionComponent<CreateQueueProps> = (props: Cr
     const Hint = () => (
         <TextContent>
             <Text component='p'>
-                Use this page to create a queue that is bound to the chosen address.
+                Use this page to create a queue that is bound to the selected address.
             </Text>
         </TextContent>
     )
@@ -152,7 +152,7 @@ export const CreateQueue: React.FunctionComponent<CreateQueueProps> = (props: Cr
                 </FormGroup>
                 <FormGroup label="Durable"
                     labelIcon={
-                        <Tooltip content='Selecting durable means that the queue can survive a broker restart.'><InfoCircleIcon /></Tooltip>}
+                        <Tooltip content='Select durable to ensure that the queue can survive a broker restart.'><InfoCircleIcon /></Tooltip>}
                 >
                     <Checkbox
                         isChecked={isDurableChecked}
@@ -173,7 +173,7 @@ export const CreateQueue: React.FunctionComponent<CreateQueueProps> = (props: Cr
                 </FormGroup>
                 <FormGroup label="Max Consumers"
                     labelIcon={
-                        <Tooltip content='Limits the number of consumers that can consume from a queue at any one time, -1 means no limit.'><InfoCircleIcon /></Tooltip>}
+                        <Tooltip content='The maximum number of consumers that can consume from the queue at any one time, -1 means no limit.'><InfoCircleIcon /></Tooltip>}
                 >
                     <NumberInput
                         value={maxConsumers}
@@ -187,7 +187,7 @@ export const CreateQueue: React.FunctionComponent<CreateQueueProps> = (props: Cr
                         allowEmptyInput />
                 </FormGroup>
                 <FormGroup label="Purge when no Consumers"
-                    labelIcon={<Tooltip content='When set to true, a queue does not start receiving messages until a consumer is attached. When the last consumer is detached from the queue, the queue is purged (its messages are removed) and does not receive any more messages until a new consumer is attached.'><InfoCircleIcon /></Tooltip>}
+                    labelIcon={<Tooltip content='Purge the queue to remove any messages present when the last remaining consumer detaches from the queue. Also, prevent the queue from receiving any more messages until a consumer attaches.'><InfoCircleIcon /></Tooltip>}
                 >
                     <Checkbox
                         isChecked={isPurgeChecked}
@@ -195,7 +195,7 @@ export const CreateQueue: React.FunctionComponent<CreateQueueProps> = (props: Cr
                         id="purge" />
                 </FormGroup>
                 <FormGroup label="extra configuration" labelIcon={
-                    <Tooltip content={<Text>You can specify additional configuration items not exposed above as a set of key-value pairs in JSON format. For example, <code>delay-before-dispatch</code> or <code>auto-delete</code>.</Text>}><InfoCircleIcon /></Tooltip>}
+                    <Tooltip content={<Text>Specify additional configuration items, that are not exposed, as a set of key-value pairs in JSON format. For example, <code>delay-before-dispatch</code> or <code>auto-delete</code>.</Text>}><InfoCircleIcon /></Tooltip>}
                 >
                     {/* eslint-disable-next-line react/jsx-no-undef */}
                     <Button variant='link' onClick={handleAddConfiguration}>
