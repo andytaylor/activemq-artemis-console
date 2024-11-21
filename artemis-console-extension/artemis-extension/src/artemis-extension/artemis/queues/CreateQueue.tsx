@@ -152,7 +152,7 @@ export const CreateQueue: React.FunctionComponent<CreateQueueProps> = (props: Cr
                 </FormGroup>
                 <FormGroup label="Durable"
                     labelIcon={
-                        <Tooltip content='Select durable to ensure that the queue can survive a broker restart.'><InfoCircleIcon /></Tooltip>}
+                        <Tooltip content='Select durable to ensure that the queue remains on the broker after a broker restart.'><InfoCircleIcon /></Tooltip>}
                 >
                     <Checkbox
                         isChecked={isDurableChecked}
