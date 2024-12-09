@@ -19,3 +19,18 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+import fetchMock from 'jest-fetch-mock'
+
+fetchMock.enableMocks()
+fetchMock.mockResponse(req => {
+  // eslint-disable-next-line no-console
+  console.log('Mock fetch:', req.url)
+  let res = '{}'
+  switch (req.url) {
+    case 'user':
+      res = '"public"'
+      break
+    default:
+  }
+  return Promise.resolve(res)
+})
