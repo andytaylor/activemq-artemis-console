@@ -13,17 +13,17 @@ const config: JestConfigWithTsJest = {
     "^.+.tsx?$": ["ts-jest", {}],
   },
 
-  //testRegex: "(/__tests__/.*|(\\.|/)simple.(test|spec))\\.[jt]s?$",
+  testRegex: "(/__tests__/.*|(\\.|/).*(test|spec))\\.[jt]s?$",
 
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|md)$':
       '<rootDir>/src/__mocks__/fileMock.js',
-   '\\.(css|less)$': '<rootDir>/src/__mocks__/styleMock.js',
+    '\\.(css|less)$': '<rootDir>/src/__mocks__/styleMock.js',
   //  '@hawtiosrc/(.*)': '<rootDir>/src/$1',
     'react-markdown': '<rootDir>/node_modules/react-markdown/react-markdown.min.js',
-    '@patternfly/react-icons': '<rootDir>/src/__mocks__/react-icons.js',
-  //  'keycloak-js': path.resolve(__dirname, './src/__mocks__/keycloak.js'),
-   'monaco-editor': '<rootDir>/src/__mocks__/monacoEditor.js',
+  // '@patternfly/react-icons': '<rootDir>/src/__mocks__/react-icons.js',
+    'keycloak-js': '<rootDir>/src/__mocks__/keycloak.js',
+    'monaco-editor': '<rootDir>/src/__mocks__/monacoEditor.js',
   //  '@monaco-editor/react': path.resolve(__dirname, './src/__mocks__/monacoEditor.js'),
     '@patternfly/react-code-editor': '<rootDir>./src/__mocks__/codeEditorMock.js',
     oauth4webapi: '<rootDir>/src/__mocks__/oauth4webapi.js',
