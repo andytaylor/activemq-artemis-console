@@ -14,13 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { HawtioPlugin, hawtio, helpRegistry, workspace, preferencesRegistry} from '@hawtio/react'
+import { HawtioPlugin, hawtio, helpRegistry, workspace, preferencesRegistry, eventService, configManager as hawtioConfigManager} from '@hawtio/react'
 import { Artemis } from './Artemis'
 import { ArtemisJMX } from './ArtemisJMX'
 import { ArtemisPreferences } from './ArtemisPreferences'
 import { log, artemisPluginName, artemisPluginTitle, artemisPluginPath, artemisJMXPluginName, artemisJMXPluginPath, artemisJMXPluginTitle } from './globals'
 import help from './help.md'
 import { configManager } from './config-manager'
+import { artemisService } from './artemis-service'
 
 export const artemis: HawtioPlugin = () => {
 
@@ -48,4 +49,23 @@ export const artemis: HawtioPlugin = () => {
 
   helpRegistry.add(artemisPluginName, artemisPluginTitle, help, 1)
   preferencesRegistry.add(artemisPluginName, artemisPluginTitle, ArtemisPreferences, 1)
+
+  artemisService.getBrokerInfo()
+      .then((brokerInfo) => {
+          hawtioConfigManager.getHawtconfig().then((hawtConfig) => {
+            const newConfig = {...hawtConfig};
+            if (newConfig.branding) {
+              newConfig.branding.appName = newConfig.branding.appName + ' (' + brokerInfo.name +')';
+              newConfig.branding.showAppName = true;
+              hawtioConfigManager.setHawtconfig(newConfig);
+            }
+          })
+      })
+      .catch((error: string) => {
+          eventService.notify({
+              type: 'warning',
+              message: error,
+          })
+      });
+      
 }

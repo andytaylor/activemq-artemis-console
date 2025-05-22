@@ -46,16 +46,7 @@ export const Artemis: React.FunctionComponent = () => {
 
   return ( 
   <Page>
-    <PageSection variant={PageSectionVariants.light}>
-      <Grid >
-        <GridItem span={2}>
-          <TextContent>
-            <Text component="h1">Broker: {brokerName}</Text>
-          </TextContent>
-        </GridItem>
-      </Grid>
-    </PageSection>
-    <PageSection isFilled>
+    <PageSection padding={{sm: 'padding'}}>
       <ArtemisTabs/>
     </PageSection>
   </Page>
