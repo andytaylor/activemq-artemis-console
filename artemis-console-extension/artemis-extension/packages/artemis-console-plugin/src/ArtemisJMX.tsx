@@ -15,18 +15,16 @@
  * limitations under the License.
  */
 import React, { useEffect, useState } from 'react'
-import { CubesIcon } from '@patternfly/react-icons'
 import Split from 'react-split'
 import { ArtemisContext, useArtemisTree } from './context';
 import { ArtemisTreeView } from './ArtemisTreeView';
-import { PageSection, TextContent, Text, PageSectionVariants, EmptyState, EmptyStateIcon, EmptyStateVariant, Title } from '@patternfly/react-core';
+import { PageSection, TextContent, Text, PageSectionVariants } from '@patternfly/react-core';
 import { Grid } from '@patternfly/react-core';
 import { GridItem } from '@patternfly/react-core';
-import { ArtemisJMXTabs } from './views/ArtemisJMXTabView';
 import './artemisJMX.css'
 import { eventService } from '@hawtio/react';
 import { artemisService } from './artemis-service';
-
+import { ArtemisJmxContent } from './ArtemisJMXContent';
 
 
 export const ArtemisJMX: React.FunctionComponent = () => {
@@ -69,22 +67,7 @@ export const ArtemisJMX: React.FunctionComponent = () => {
             <ArtemisTreeView />
           </div>
           <div>
-            {!selectedNode && 
-            <PageSection variant={PageSectionVariants.light} isFilled>
-            <EmptyState variant={EmptyStateVariant.full}>
-              <EmptyStateIcon icon={CubesIcon} />
-              <Title headingLevel='h1' size='lg'>
-                Select Artemis Node
-              </Title>
-            </EmptyState>
-          </PageSection>
-          }
-          {selectedNode && 
-            
-            <PageSection isFilled>
-              <ArtemisJMXTabs node={selectedNode}/>
-            </PageSection>
-          }
+              <ArtemisJmxContent/>
           </div>
         </Split>
       </ArtemisContext.Provider>
