@@ -155,7 +155,11 @@ const operationOptions = [
       setColumnsLoaded(true);
     }
     if(broker.storageColumnLocation) {
-      setPerPage(artemisPreferencesService.loadTablePageSize(broker.storageColumnLocation));
+      const pageSize = artemisPreferencesService.loadTablePageSize(broker.storageColumnLocation);
+      setPerPage(pageSize);
+      if (pageSize == -1) {
+        setIsCompact(true);
+      }
     }
     listData();
 
